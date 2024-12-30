@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>(α,α,α)-tris(tribenzo[8]annulenylene)</title>
+    <script
+      type="text/javascript"
+      src="https://3Dmol.csb.pitt.edu/build/3Dmol-min.js"
+    ></script>
+  </head>
+  <body>
+    <div id="viewer" style="width: 800px; height: 600px; margin: auto;"></div>
+
+    <script>
+      // Crear el visualizador de cuadrícula
+      const viewer = $3Dmol.createViewerGrid(
+        "viewer",
+        {
+          rows: 2,
+          cols: 2,
+          control_all: true, // El control del ratón afecta a todos los visores
+        },
+        { backgroundColor: "lightgrey" }
+      );
+
+      // Cargar el archivo CIF
+      fetch("./34n.cif")
+        .then((response) => response.text())
+        .then((cifData) => {
+          // Para cada celda en la cuadrícula de visores, agregamos el modelo y establecemos los estilos
+          let viewers = viewer.viewers; // Accede a los visores individuales de la cuadrícula
+
+          // Visualización en la primera celda
+          let v1 = viewers[0][0];
+          v1.addModel(cifData, "cif");
+          v1.setStyle({ stick: {} });
+          v1.zoomTo();
+          v1.render();
+
+          // Visualización en la segunda celda
+          let v2 = viewers[0][1];
+          v2.addModel(cifData, "cif");
+          v2.setStyle({ stick: {} });
+          v2.zoomTo();
+          v2.render();
+
+          // Visualización en la tercera celda
+          let v3 = viewers[1][0];
+          v3.addModel(cifData, "cif");
+          v3.setStyle({ cartoon: { color: "spectrum" } });
+          v3.zoomTo();
+          v3.render();
+
+          // Visualización en la cuarta celda
+          let v4 = viewers[1][1];
+          v4.addModel(cifData, "cif");
+          v4.setStyle({ cartoon: { colorscheme: "chain" } });
+          v4.zoomTo();
+          v4.render();
+        })
+        .catch((e) => console.log(e));
+    </script>
+  </body>
+</html>
